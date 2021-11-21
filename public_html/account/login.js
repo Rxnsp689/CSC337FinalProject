@@ -1,9 +1,14 @@
 /* Log user in */
+var socket = io();
 function login() {
     let u = $('#usernameLogin').val();
     let p = $('#passwordLogin').val();
     $('#usernameLogin').val('');
     $('#passwordLogin').val('');
+    socket.emit("login", {
+      username: u;
+      password: p
+    });
     $.get(
       '/account/login/' + u + '/' + encodeURIComponent(p),
       (data, status) => {
@@ -13,7 +18,7 @@ function login() {
           }
     });
 }
-/* Create a new account */  
+/* Create a new account */
 function createAccount() {
     let u = $('#usernameCreate').val();
     let p = $('#passwordCreate').val();
@@ -25,4 +30,4 @@ function createAccount() {
           alert(data);
     });
 }
-  
+
