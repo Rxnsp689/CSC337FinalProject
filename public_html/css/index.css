@@ -1,0 +1,57 @@
+/*
+CSS for index page
+Daniel Ryngler and Sophia Wang
+*/
+
+* { 
+    box-sizing: border-box;
+    background-color: rgb(221, 218, 218);
+}
+
+body {
+    margin-top: 5%;
+    margin-left: 5%;
+}
+
+.center {
+    margin: auto;
+    width: 50%;
+    /*border: 3px solid rgb(75, 139, 168);*/
+    padding: 10px;
+}
+
+.hr {
+    position: fixed;
+    left: 0px;
+    width: 100%;
+    border-top: 3px solid rgb(255, 255, 255);
+}
+
+hr {
+    border-top: 3px solid rgb(70, 75, 70);
+}   
+
+.header {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 10%;
+}
+
+h1 {
+    font-size: 24px;
+    font-family: fantasy;
+    color: black;
+}
+
+#title {
+    text-align: center;
+    font-size: 24px;
+    font-family: fantasy;
+    color: black;
+}
+
+.user_submit, input, button {
+    background-color: white;
+}

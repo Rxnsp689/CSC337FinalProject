@@ -1,0 +1,43 @@
+<!--
+    UI for home page
+    Daniel Ryngler and Sophia Wang (11/18/2021)
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Drawable</title>
+        <link rel="stylesheet" type="text/css" href="../css/home.css">
+	<script src="../jquery.js"></script>
+	<script src="./script.js"></script>
+    </head>
+    <body>
+        <div class="header">
+            <h1 id="title">Drawable</h1>
+            <hr>
+        </div>
+        <div class="main_content">
+            <div id="home_left">
+                <div class="hl" id="search">
+                    <input name="search_input" type="text" id="search_input">
+                    <button type="button" onclick="itemSearch()">Search for a Drawing</button>
+                </div>
+                <!--<div class="hl" id="view_listings">
+                    <button type="button" onclick="viewListings()">View Your Listings</button>
+                </div>-->
+                <div class="hl" id="new_drawing">
+                    <!--onclick="viewPurchases()"-->
+                    <button type="button" onclick="window.location='draw.html';">Create a New Drawing!</button>
+                </div>
+                <div class="hl" id="logout">
+                    <button type="button" onclick="window.location='../account/index.html';">Log Out</button>
+                </div>
+            </div>
+            <div class="vl"></div>
+            <div id="home_right">
+                <h1 class="h1center">Saved Drawings</h1>
+            </div>
+        </div>
+    </body>
+</html>

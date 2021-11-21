@@ -1,0 +1,52 @@
+<!--
+    Final Project
+    UI for login page
+    Daniel Ryngler and Sophia Wang (11/18/2021)
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Drawable</title>
+        <link rel="stylesheet" type="text/css" href="../css/index.css">
+	<script src="../jquery.js"></script>
+	<script src="./login.js"></script>
+    </head>
+    <body>
+        <div class="header">
+            <h1 id="title">Drawable</h1>
+            <hr>
+        </div>
+        <!---
+        <h1 id="title">Drawable</h1>
+        <div class="hr"></div>-->
+        <div class="center">
+            <div id="login" class="center">
+                <h1>Login</h1>
+                    <label for="usernameLogin">Username:</label>
+                    <input name="usernameLogin" type="text" id="usernameLogin">
+                    <br><br>
+                    <label for="passwordLogin">Password:</label>
+                    <input name="passwordLogin" type="password" id="passwordLogin">
+                    <br><br>
+                    <div class="user_submit_bttn">
+                        <button type="button" onclick="login()">Login</button>
+                    </div>
+            </div>
+            <br><br>
+            <div id="addUser" class="center">
+                <h1>Create Account!</h1>
+                    <label for="usernameCreate">Username:</label>
+                    <input name="usernameCreate" type="text" id="usernameCreate">
+                    <br><br>
+                    <label for="passwordCreate">Password:</label>
+                    <input name="passwordCreate" type="text" id="passwordCreate">
+                    <br><br>
+                    <div class="user_submit_bttn">
+                        <button type="button" onclick="createAccount()">Create Account</button>
+                    </div>
+            </div>
+        </div>
+    </body>
+</html>
