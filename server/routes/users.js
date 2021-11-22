@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../schemas/User");
-
+const User = require("../../schemas/User");
+var socket = io();
 router.get('/currUser', (req,res) => {
     var c = req.cookies;
     var u;
@@ -21,6 +21,7 @@ router.post('/create', (req,res) => {
     var user1 = new User({username: requestData.username, password:requestData.password});
     user1.save((err)=>{
         if(err) console.log('PROBLEM');
+        socket.emit('createUser',requestData);
         res.end("SAVED");
     });
 });
