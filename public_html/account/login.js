@@ -5,10 +5,10 @@ function login() {
     let p = $('#passwordLogin').val();
     $('#usernameLogin').val('');
     $('#passwordLogin').val('');
-    socket.emit("login", {
+    /*socket.emit("login", {
       username: u;
       password: p
-    });
+    });*/
     $.get(
       '/account/login/' + u + '/' + encodeURIComponent(p),
       (data, status) => {
