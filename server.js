@@ -11,12 +11,15 @@ const http = require('http').Server(app);
 var io = require('socket.io')(http);
 const User = require("./server/schemas/User");
 const Room = require("./server/schemas/Room");
+//const users = require("./server/routes/Rooms");
+const rooms = require("./server/routes/Rooms");
 
 // Tell the express app to pare any body type and to use a cookie parser
 app.use(parser.json());
 app.use(parser.urlencoded({extended: true}));
 app.use(cookieParser());
 
+//app.use("/rooms",rooms);
 //app.use('/app/*', authenticate);
 app.use(express.static('public_html'));
 app.get('/', (req, res) => { res.redirect('/account/index.html'); });
@@ -83,6 +86,7 @@ app.post("/createRoom", (req,res) => {
 
     room1.save((err)=>{
         if(err) console.log('PROBLEM');
+        console.log("SAVED");
         //res.end("SAVED");
     });
     res.end(JSON.stringify(room1));
