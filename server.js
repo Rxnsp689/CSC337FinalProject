@@ -11,8 +11,9 @@ const http = require('http').Server(app);
 var io = require('socket.io')(http);
 const User = require("./server/schemas/User");
 const Room = require("./server/schemas/Room");
+const Canvas = require("./server/schemas/Canvas");
 //const users = require("./server/routes/Rooms");
-const rooms = require("./server/routes/Rooms");
+//const rooms = require("./server/routes/Rooms");
 
 // Tell the express app to pare any body type and to use a cookie parser
 app.use(parser.json());
@@ -32,7 +33,7 @@ http.listen(port, () => {
 var users = {};
 
 function addSession(username,socketID){
-  users[socketID] = socketID
+  users[socketID] = username
 }
 
 function doesUserHaveSession(username){
@@ -77,20 +78,46 @@ function generateRoomID(tokenLength){
     }
     return id;
 }
+app.get('/currUser', (req,res) => {
+    var c = req.cookies;
+    var u;
+    if(c && c.login){
+        u = c.login.username;
+    }
+    User.findOne({username:u}).exec((err,results) => {
+        if(err){return res.end("ERROR");};
+        /*p = results.password
+        userObj = {'username':u, 'password':p};
+        res.end(JSON.stringify(userObj));*/
+        res.end(JSON.stringify(results));
+    });
+});
 
 app.post("/createRoom", (req,res) => {
     console.log("in create room");
     //requestData = JSON.parse(req.body.data);
     // need to get user's id (currently using test1)
-    var room1 = new Room({host_id: "619c4e9f139ae6bd7df25b6a", room_token: generateRoomID(15)});
+    var c = req.cookies;
+    console.log(c);
+    var u;
+    if(c && c.login){
+        u = c.login.username;
+        console.log("username: "+ u);
+    }
+    User.findOne({username:u}).exec((err,results) => {
+        if(err){return res.end("ERROR");};
+        var room1 = new Room({host_id: results._id, room_token: generateRoomID(15)});
 
-    room1.save((err)=>{
-        if(err) console.log('PROBLEM');
-        console.log("SAVED");
-        //res.end("SAVED");
+        room1.save((err)=>{
+            if(err) console.log('PROBLEM');
+            console.log("SAVED");
+            //res.end("SAVED");
+        });
+        res.end(JSON.stringify(room1));
     });
-    res.end(JSON.stringify(room1));
+
 });
+
 
 app.get('/account/create/:username/:password', (req,res) => {
     //requestData = JSON.parse(req.body.data);
@@ -109,23 +136,58 @@ app.get('/account/login/:username/:password', (req, res) => {
     if(err){
       return res.end("Error login");
     } else if(results.length==1){
-      addSession(req.params.username);
-      res.cookie("login",{username: req.params.username}, {maxAge: 120000});
+      //addSession(req.params.username);
+      res.cookie("login",{username: req.params.username});
+      console.log("Added cookie");
+      //res.cookie("login",{username: req.params.username}, {maxAge: 120000});
       res.end("LOGIN");
     } else{
       res.end("incorrect number of results");
     }
   });
 });
+
+app.get("/room/:token", (req,res) => {
+    console.log("in server side room");
+    //requestData = JSON.parse(req.body.data);
+    //console.log("room_token: "+requestData.room_token);
+    console.log("token: " + req.params.token);
+    Room.findOne({room_token:req.params.token}).then(room => {
+        if(room){
+            res.end(JSON.stringify(room));
+        } else{
+            res.end("Room not found");
+        }
+    });
+});
+
+app.post('/createCanvas', (req,res) => {
+    requestData = JSON.parse(req.body.data);
+    var canvas1 = new Canvas({user_id: requestData.user_id, data_url:requestData.data_url});
+    canvas1.save((err)=>{
+        if(err) console.log('Failed to create canvas');
+        res.end("Saved canvas successfully");
+    });
+});
+
+// get all canvases for a user
+app.get("/getCanvas/:userid",(req,res)=>{
+    Canvas.find({user_id:req.params.userid}).exec((err,results) => {
+        if(err){return res.end("ERROR");};
+        res.end(JSON.stringify(results));
+    });
+});
 /*
 authenticate here?
 */
-/*
+
 io.on("connection",(socket)=>{
     socket.on("login",(userLogin)=>{
         var u = userLogin.username;
         var p = userLogin.password;
-
+        addSession(socket.id,u);
+        console.log("IN SOCKET LOGIN");
+        console.log(users);
     });
     socket.on("disconnect", function(){
         if(socket.id in users){
@@ -133,4 +195,4 @@ io.on("connection",(socket)=>{
             delete users[socket.id];
         }
     });
-});*/
+});
