@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Artwork = require('../../schemas/Canvas');
 
-router.post('/create', (req,res) => {
+router.post('/createCanvas', (req,res) => {
     requestData = JSON.parse(req.body.data);
     var canvas1 = new Canvas({user_id: requestData.user_id, data_url:requestData.data_url});
     canvas1.save((err)=>{
@@ -11,7 +11,7 @@ router.post('/create', (req,res) => {
     });
 });
 
-router.delete("/:id", (req,res) => {
+router.delete("/removeCanvas/:id", (req,res) => {
     Canvas.deleteOne({_id: req.params.id }, function(err){
         if(err){
             res.end("Failed to remove canvas");
@@ -21,7 +21,7 @@ router.delete("/:id", (req,res) => {
     });
 });
 
-router.get("/:id",(req,res)=>{
+router.get("/getCanvas/:id",(req,res)=>{
     Canvas.findOne({_id:req.params.id}).exec((err,results) => {
         if(err){return res.end("ERROR");};
         res.end(JSON.stringify(results));

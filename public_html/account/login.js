@@ -1,5 +1,5 @@
 /* Log user in */
-var socket = io();
+//var socket = io();
 function login() {
     let u = $('#usernameLogin').val();
     let p = $('#passwordLogin').val();
@@ -20,6 +20,7 @@ function login() {
 }
 /* Create a new account */
 function createAccount() {
+    console.log("client create user");
     let u = $('#usernameCreate').val();
     let p = $('#passwordCreate').val();
     $('#usernameCreate').val('');
