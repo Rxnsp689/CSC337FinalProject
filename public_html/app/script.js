@@ -1,5 +1,4 @@
 //var socket = io();
-
 function logout() {
   //socket.emit("disconnect");
   window.location.href = '../account/index.html';
@@ -7,15 +6,20 @@ function logout() {
 
 // need to go to different url with roomID like draw/roomID.html?
 function joinRoom(){
-  roomID = document.getElementById("room_input");
-  var obj = {room_token: roomID};
+  console.log("In client join room");
+  roomID = $('#room_input').val();
+  //roomID = document.getElementById("room_input").val();
+  //console.log("room token: " + roomID);
+  //var obj = {room_token: roomID};
   $.ajax({
-    url: '/joinRoom',
+    url: '/room/'+roomID,
     method: "GET",
-    data: JSON.stringify(obj),
+    //data: JSON.stringify(obj),
     contentType: 'application/json',
     success: function(result){
-      console.log("Joined room"+roomID);
+      results = JSON.parse(result);
+      //console.log("Joined room "+roomID);
+      console.log("Joined room "+results.room_token);
       window.location='draw.html';
     }
   });
@@ -37,3 +41,20 @@ function createRoom(){
   });
 }
 
+// how to get user id?
+function saveCanvas(){
+  console.log("Client save canvas");
+  var canvas = document.getElementById('can');
+  var dataURL = canvas.toDataURL();
+  $.ajax({
+    url: '/createCanvas',
+    method: "POST",
+    contentType: 'application/json',
+    success: function(result){
+
+      results = JSON.parse(result);
+      console.log("Created canvas"+results.data_url);
+      window.location='draw.html';
+    }
+  });
+}

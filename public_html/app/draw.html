@@ -12,13 +12,14 @@
         <link rel="stylesheet" type="text/css" href="../css/draw.css">
 	<script src="../jquery.js"></script>
 	<script src="./draw.js"></script>
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
     </head>
     <body onload="init()">
-        <div class="header"> 
+        <div class="header">
                 <a href="home.html">
                     <h1 id="title">Drawable</h1>
                 </a>
-                <hr> 
+                <hr>
         </div>
         <div class="main">
             <canvas id="can" width="400" height="400" style="position:absolute;top:10%;left:10%;border:2px solid;"></canvas>
@@ -32,7 +33,7 @@
             <div style="position:absolute;top:20%;left:43%;">Eraser</div>
             <div style="position:absolute;top:22%;left:45%;width:15px;height:15px;background:white;border:2px solid;" id="white" onclick="color(this)"></div>
             <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;">
-            <input type="button" value="save" id="btn" size="30" onclick="" style="position:absolute;top:55%;left:10%;"> 
+            <input type="button" value="save" id="btn" size="30" onclick="" style="position:absolute;top:55%;left:10%;">
             <input type="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:55%;left:15%;">
         </div>
     </body>

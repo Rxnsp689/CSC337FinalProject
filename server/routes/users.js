@@ -10,12 +10,13 @@ router.get('/currUser', (req,res) => {
     }
     User.findOne({username:u}).exec((err,results) => {
         if(err){return res.end("ERROR");};
-        p = results.password
+        /*p = results.password
         userObj = {'username':u, 'password':p};
-        res.end(JSON.stringify(userObj));
+        res.end(JSON.stringify(userObj));*/
+        res.end(JSON.stringify(results));
     });
 });
-
+// not used
 router.post('/createUser', (req,res) => {
     requestData = JSON.parse(req.body.data);
     var user1 = new User({username: requestData.username, password:requestData.password});

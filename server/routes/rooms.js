@@ -12,7 +12,7 @@ function generateRoomID(tokenLength){
     return id;
 }
 
-router.post("/createRoom", (req,res) => {
+/*router.post("/createRoom", (req,res) => {
     console.log("in create room");
     requestData = JSON.parse(req.body.data);
 
@@ -24,7 +24,7 @@ router.post("/createRoom", (req,res) => {
         //res.end("SAVED");
     });
     res.end(JSON.stringify(room1));
-});
+});*/
 router.post("/createRoom", (req,res) => {
     console.log("in create room");
     //requestData = JSON.parse(req.body.data);

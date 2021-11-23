@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Artwork = require('../../schemas/Canvas');
+const Canvas = require('../../schemas/Canvas');
 
 router.post('/createCanvas', (req,res) => {
     requestData = JSON.parse(req.body.data);
