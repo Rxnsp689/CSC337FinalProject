@@ -20,6 +20,7 @@ function login() {
 }
 /* Create a new account */
 function createAccount() {
+    console.log("client create user");
     let u = $('#usernameCreate').val();
     let p = $('#passwordCreate').val();
     $('#usernameCreate').val('');

@@ -1,4 +1,5 @@
 //var socket = io();
+
 function logout() {
   //socket.emit("disconnect");
   window.location.href = '../account/index.html';
@@ -22,6 +23,7 @@ function joinRoom(){
 
 // need to go to different url with roomID like draw/roomID.html?
 function createRoom(){
+  console.log("Client create room");
   $.ajax({
     url: '/createRoom',
     method: "POST",

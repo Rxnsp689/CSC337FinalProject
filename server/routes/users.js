@@ -29,7 +29,7 @@ router.post('/createUser', (req,res) => {
 /*
 no hashing of passwords
 */
-router.get('/login/:username/:password', (req, res) => {
+router.get('/account/login/:username/:password', (req, res) => {
   User.find({username: req.params.username, password:req.params.password}).exec(function(err,results){
     if(err){
       return res.end("Error login");

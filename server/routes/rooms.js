@@ -7,13 +7,15 @@ function generateRoomID(tokenLength){
     var lenChars = possibleChars.length;
     var id = "";
     for(var i = 0; i<tokenLength;i++){
-        id+=possibleChars.charAt(Math.floor(Math.random() * charactersLength));
+        id+=possibleChars.charAt(Math.floor(Math.random() * lenChars));
     }
     return id;
 }
 
 router.post("/createRoom", (req,res) => {
+    console.log("in create room");
     requestData = JSON.parse(req.body.data);
+
     var room1 = new Room({host_id: requestData.userId, room_token: generateRoomID(15)});
 
     room1.save((err)=>{
