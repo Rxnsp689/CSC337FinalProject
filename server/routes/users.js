@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../schemas/User");
-
+const User = require("../../schemas/User");
+var socket = io();
 router.get('/currUser', (req,res) => {
     var c = req.cookies;
     var u;
@@ -16,11 +16,12 @@ router.get('/currUser', (req,res) => {
     });
 });
 
-router.post('/create', (req,res) => {
+router.post('/createUser', (req,res) => {
     requestData = JSON.parse(req.body.data);
     var user1 = new User({username: requestData.username, password:requestData.password});
     user1.save((err)=>{
         if(err) console.log('PROBLEM');
+        socket.emit('createUser',requestData);
         res.end("SAVED");
     });
 });
@@ -28,7 +29,7 @@ router.post('/create', (req,res) => {
 /*
 no hashing of passwords
 */
-router.get('/login/:username/:password', (req, res) => {
+router.get('/account/login/:username/:password', (req, res) => {
   User.find({username: req.params.username, password:req.params.password}).exec(function(err,results){
     if(err){
       return res.end("Error login");

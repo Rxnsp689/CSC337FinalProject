@@ -26,12 +26,21 @@
                 <!--<div class="hl" id="view_listings">
                     <button type="button" onclick="viewListings()">View Your Listings</button>
                 </div>-->
+                <div class="hl" id="new_room">
+                    <!--onclick="viewPurchases()"-->
+                    <button type="button" onclick="createRoom();">Create a New Room!</button>
+                </div>
+                <div class="hl" id="existing_room">
+                    <!--onclick="viewPurchases()"-->
+                    <input name="room_input" type="text" id="room_input">
+                    <button type="button" onclick="joinRoom();">Join a room!</button>
+                </div>
                 <div class="hl" id="new_drawing">
                     <!--onclick="viewPurchases()"-->
                     <button type="button" onclick="window.location='draw.html';">Create a New Drawing!</button>
                 </div>
                 <div class="hl" id="logout">
-                    <button type="button" onclick="window.location='../account/index.html';">Log Out</button>
+                    <button type="button" onclick="logout();">Log Out</button>
                 </div>
             </div>
             <div class="vl"></div>
