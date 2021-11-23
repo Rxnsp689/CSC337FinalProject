@@ -16,7 +16,7 @@ router.get('/currUser', (req,res) => {
     });
 });
 
-router.post('/create', (req,res) => {
+router.post('/createUser', (req,res) => {
     requestData = JSON.parse(req.body.data);
     var user1 = new User({username: requestData.username, password:requestData.password});
     user1.save((err)=>{

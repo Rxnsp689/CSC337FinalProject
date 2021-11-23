@@ -3,7 +3,7 @@ CSS for home page
 Daniel Ryngler
 */
 
-* { 
+* {
     box-sizing: border-box;
     background-color: rgb(221, 218, 218);
 }
@@ -30,7 +30,7 @@ h1 {
     padding: 10px;
 }
 
-#search_submit, button, #search_input {
+#search_submit, button, #search_input, #room_input {
     background-color: white;
 }
 

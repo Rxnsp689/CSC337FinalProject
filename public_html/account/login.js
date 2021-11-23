@@ -1,5 +1,5 @@
 /* Log user in */
-var socket = io();
+//var socket = io();
 function login() {
     let u = $('#usernameLogin').val();
     let p = $('#passwordLogin').val();

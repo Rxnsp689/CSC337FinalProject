@@ -12,17 +12,18 @@ function generateRoomID(tokenLength){
     return id;
 }
 
-router.post("/create", (req,res) => {
+router.post("/createRoom", (req,res) => {
     requestData = JSON.parse(req.body.data);
     var room1 = new Room({host_id: requestData.userId, room_token: generateRoomID(15)});
 
     room1.save((err)=>{
         if(err) console.log('PROBLEM');
-        res.end("SAVED");
+        //res.end("SAVED");
     });
+    res.end(JSON.stringify(room1));
 });
 
-router.get("/join", (req,res) => {
+router.get("/joinRoom", (req,res) => {
     requestData = JSON.parse(req.body.data);
     Room.findOne({room_token:requestData.room_token}).then(room => {
         if(room){
@@ -33,7 +34,7 @@ router.get("/join", (req,res) => {
     });
 });
 
-router.get("/:tokenid", (req,res) => {
+router.get("/room/:tokenid", (req,res) => {
     Room.findOne({_id:req.params.tokenid}).then(room => {
         if(room){
             res.end(JSON.stringify(room));

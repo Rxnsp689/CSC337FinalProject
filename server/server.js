@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const http = require('http').Server(app);
 var io = require('socket.io')(http);
-const User = require("../../schemas/User");
+const User = require("./schemas/User");
 
 // Tell the express app to pare any body type and to use a cookie parser
 app.use(parser.json());
@@ -48,11 +48,11 @@ function authenticate(req, res, next) {
       next();
     } else{
       console.log("Redirect");
-      res.redirect("/index.html");
+      res.redirect("/account/index.html");
     }
   } else{
     console.log("Redirect");
-    res.redirect("/index.html");
+    res.redirect("/account/index.html");
   }
 }
 
@@ -76,4 +76,4 @@ io.on("connection",(socket)=>{
             delete users[socket.id];
         }
     });
-})
+});
