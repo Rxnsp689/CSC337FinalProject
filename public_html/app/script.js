@@ -1,6 +1,8 @@
-//var socket = io();
+
 function logout() {
-  //socket.emit("disconnect");
+  var socket = io.connect("http://localhost:3000");
+  console.log("in client logout");
+  socket.emit("logout",{});
   window.location.href = '../account/index.html';
 }
 

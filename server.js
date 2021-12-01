@@ -32,7 +32,7 @@ http.listen(port, () => {
 
 var users = {};
 
-function addSession(username,socketID){
+function addSession(socketID,username){
   users[socketID] = username
 }
 
@@ -95,8 +95,6 @@ app.get('/currUser', (req,res) => {
 
 app.post("/createRoom", (req,res) => {
     console.log("in create room");
-    //requestData = JSON.parse(req.body.data);
-    // need to get user's id (currently using test1)
     var c = req.cookies;
     console.log(c);
     var u;
@@ -161,6 +159,7 @@ app.get("/room/:token", (req,res) => {
     });
 });
 
+// need get user_id through cookies
 app.post('/createCanvas', (req,res) => {
     requestData = JSON.parse(req.body.data);
     var canvas1 = new Canvas({user_id: requestData.user_id, data_url:requestData.data_url});
@@ -180,7 +179,8 @@ app.get("/getCanvas/:userid",(req,res)=>{
 /*
 authenticate here?
 */
-
+// redirection using the socket seems to be needed
+// since just changing window location(from login) disconnects the socket
 io.on("connection",(socket)=>{
     socket.on("login",(userLogin)=>{
         var u = userLogin.username;
@@ -189,10 +189,24 @@ io.on("connection",(socket)=>{
         console.log("IN SOCKET LOGIN");
         console.log(users);
     });
-    socket.on("disconnect", function(){
+    socket.on("logout", ()=>{
+        console.log("IN SOCKET LOGOUT");
+        console.log(socket.id);
+        console.log(users);
         if(socket.id in users){
-            console.log(users[socket.id] + " has disconnected");
+            console.log(users[socket.id] + " has logged out");
             delete users[socket.id];
+            console.log(users);
+        }
+    });
+    socket.on("disconnect", ()=>{
+        console.log("IN SOCKET DISCONNECT");
+        console.log(socket.id);
+        console.log(users);
+        if(socket.id in users){
+            console.log(users[socket.id] + " has logged out");
+            delete users[socket.id];
+            console.log(users);
         }
     });
 });
