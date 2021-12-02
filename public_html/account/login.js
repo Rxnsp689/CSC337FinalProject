@@ -1,15 +1,10 @@
 /* Log user in */
 
 function login() {
-    var socket = io.connect("http://localhost:3000");
     let u = $('#usernameLogin').val();
     let p = $('#passwordLogin').val();
     $('#usernameLogin').val('');
     $('#passwordLogin').val('');
-    socket.emit("login", {
-      username: u,
-      password: p
-    });
     $.get(
       '/account/login/' + u + '/' + encodeURIComponent(p),
       (data, status) => {

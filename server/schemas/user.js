@@ -5,8 +5,11 @@ const UserSchema = new Schema({
     username: {
         type: String
     },
-    password: {
+    salt: {
         type: String
+    },
+    hash:{
+        type:String
     }
 });
 
