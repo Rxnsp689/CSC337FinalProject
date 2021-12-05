@@ -9,9 +9,9 @@ var newY = 0;
 var cord_flag = false;
 var x = "black";
 var y = 2;
+var canvasIdForImg = "";
 
 function loadCanvas() {
-    var canvasIdForImg = "";
     var data_url = "";
     var url = document.location.href;
     var params = url.split('?');
