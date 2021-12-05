@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Room = require('../../schemas/Room');
+//const Room = require('../../schemas/Room');
 
 function generateRoomID(tokenLength){
     var possibleChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -12,11 +12,24 @@ function generateRoomID(tokenLength){
     return id;
 }
 
-router.post("/createRoom", (req,res) => {
+/*router.post("/createRoom", (req,res) => {
     console.log("in create room");
     requestData = JSON.parse(req.body.data);
 
     var room1 = new Room({host_id: requestData.userId, room_token: generateRoomID(15)});
+
+    room1.save((err)=>{
+        if(err) console.log('PROBLEM');
+        console.log("SAVED");
+        //res.end("SAVED");
+    });
+    res.end(JSON.stringify(room1));
+});*/
+router.post("/createRoom", (req,res) => {
+    console.log("in create room");
+    //requestData = JSON.parse(req.body.data);
+    // need to get user's id (currently using test1)
+    var room1 = new Room({host_id: "619c4e9f139ae6bd7df25b6a", room_token: generateRoomID(15)});
 
     room1.save((err)=>{
         if(err) console.log('PROBLEM');

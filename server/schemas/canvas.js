@@ -8,7 +8,7 @@ const CanvasSchema = new Schema({
     },
 
     data_url: {
-        type: String,
+        type: String
     }
 
 })
