@@ -20,7 +20,7 @@ function joinRoom(){
       results = JSON.parse(result);
       //console.log("Joined room "+roomID);
       console.log("Joined room "+results.room_token);
-      window.location='draw.html';
+      window.location='draw.html?token='+results.room_token;
     }
   });
 }

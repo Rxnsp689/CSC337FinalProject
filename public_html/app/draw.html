@@ -13,7 +13,7 @@
 	<script src="../jquery.js"></script>
 	<script src="./draw.js"></script>
     </head>
-    <body onload="init()">
+    <body onload="loadCanvas()">
         <div class="header">
             <a href="home.html">
                 <h1 id="title">Drawable</h1>
@@ -21,7 +21,7 @@
             <hr> 
         </div>
         <div class="main">
-            <canvas id="can" width="400" height="400"></canvas>
+            <canvas id="can" width="600" height="600"></canvas>
             <div id="d1">Choose Color</div>
             <div id="green" onclick="color(this)"></div>
             <div id="blue" onclick="color(this)"></div>
