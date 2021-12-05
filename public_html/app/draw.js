@@ -7,8 +7,11 @@ var canvas, ctx, flag = false,
 
     var x = "black",
         y = 2;
-    
+
     function init() {
+        var url = document.location.href;
+        var params = url.split("?");
+        console.log(params);
         canvas = document.getElementById('can');
         ctx = canvas.getContext("2d");
         w = canvas.width;
@@ -19,10 +22,10 @@ var canvas, ctx, flag = false,
         /*
         var img = new Image;
         img.onload = function(){
-            ctx.drawImage(img,0,0); 
+            ctx.drawImage(img,0,0);
         };
         img.src = "";*/
-    
+
         canvas.addEventListener("mousemove", function (e) {
             cordinate('move', e)
         }, false);
@@ -36,7 +39,7 @@ var canvas, ctx, flag = false,
             cordinate('out', e)
         }, false);
     }
-    
+
     function color(obj) {
         switch (obj.id) {
             case "green":
@@ -63,7 +66,7 @@ var canvas, ctx, flag = false,
         }
         if (x == "white") y = 14;
         else y = 2;
-    
+
     }
 
     function cordinate(res, e) {
@@ -72,7 +75,7 @@ var canvas, ctx, flag = false,
             oldY = newY;
             newX = e.clientX - canvas.offsetLeft;
             newY = e.clientY - canvas.offsetTop;
-    
+
             flag = true;
             cord_flag = true;
             if (cord_flag) {
@@ -96,7 +99,7 @@ var canvas, ctx, flag = false,
             }
         }
     }
-    
+
     function draw() {
         ctx.beginPath();
         ctx.moveTo(oldX, oldY);
@@ -106,7 +109,7 @@ var canvas, ctx, flag = false,
         ctx.stroke();
         ctx.closePath();
     }
-    
+
     function erase() {
         var m = confirm("Click to Clear");
         if (m) {
@@ -114,7 +117,7 @@ var canvas, ctx, flag = false,
             document.getElementById("canvasimg").style.display = "none";
         }
     }
-    
+
     function save() {
         var imgName = prompt("Please Enter a name for your master piece");
         document.getElementById("canvasimg").style.border = "2px solid";
