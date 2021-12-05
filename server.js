@@ -224,12 +224,12 @@ app.post('/saveCanvas', (req,res) => {
 });
 
 // get canvas for a user
-app.get("/getCanvas/:userid",(req,res)=>{
+/*app.get("/getCanvas/:userid",(req,res)=>{
     Canvas.find({user_id:req.params.userid}).exec((err,results) => {
         if(err){return res.end("ERROR");};
         res.end(JSON.stringify(results));
     });
-});
+});*/
 
 // get all canvas for a canvasid
 app.get("/getCanvas/:canvasid",(req,res)=>{

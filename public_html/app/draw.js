@@ -11,28 +11,30 @@ var x = "black";
 var y = 2;
 
 function loadCanvas() {
-
+    var data_url = "";
     var url = document.location.href;
     var params = url.split('?');
     var roomID = params[1].split('=')[1];
-
+    console.log("roomID: " + roomID);
     $.ajax({
         url: '/room/'+roomID,
         method: "GET",
-        contentType: 'application/json',
+        contentType: 'application/x-www-form-urlencoded',
         success: function(result){
             results = JSON.parse(result);
+            console.log(results);
             var canvasIdForImg = results.canvas_id;
             console.log("Canvas Id ", canvasIdForImg);
-            
+
             $.ajax({
                 url: '/getCanvas/'+canvasIdForImg,
                 method: "GET",
-                contentType: 'application/json',
+                contentType: 'application/x-www-form-urlencoded',
                 success: function(result){
                   results = JSON.parse(result);
-                  var data_url = results.data_url;
-                  console.log("data", data_url);
+                  console.log(results);
+                  data_url = results[0].data_url;
+                  console.log("hello: " +data_url+ "bye");
                 }
             });
         }
@@ -48,7 +50,7 @@ function loadCanvas() {
     if (data_url != "") {
         var img = new Image;
         img.onload = function(){
-            ctx.drawImage(img,0,0); 
+            ctx.drawImage(img,0,0);
         };
         img.src = data_url;
     }
@@ -163,7 +165,7 @@ function save() {
         method: "GET",
         contentType: 'application/json',
         success: function(result){
-    
+
           results = JSON.parse(result);
           console.log("Created canvas"+results.data_url);
           window.location='draw.html';
