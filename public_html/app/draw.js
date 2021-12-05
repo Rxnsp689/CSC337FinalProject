@@ -11,6 +11,7 @@ var x = "black";
 var y = 2;
 
 function loadCanvas() {
+    var canvasIdForImg = "";
     var data_url = "";
     var url = document.location.href;
     var params = url.split('?');
@@ -23,7 +24,7 @@ function loadCanvas() {
         success: function(result){
             results = JSON.parse(result);
             console.log(results);
-            var canvasIdForImg = results.canvas_id;
+            canvasIdForImg = results.canvas_id;
             console.log("Canvas Id ", canvasIdForImg);
 
             $.ajax({
@@ -149,28 +150,13 @@ function erase() {
 
 function save() {
     var imgName = prompt("Please Enter a name for your master piece");
-    //document.getElementById("canvasimg").style.border = "2px solid";
     var imgData = canvas.toDataURL();
 
     body = {
-        canvas_id: "",
+        canvas_id: canvasIdForImg,
         data_url: imgData,
     };
     $.post("/saveCanvas", body, (data) => {
         console.log("saved image");
     });
-
-    $.ajax({
-        url: '/currUser',
-        method: "GET",
-        contentType: 'application/json',
-        success: function(result){
-
-          results = JSON.parse(result);
-          console.log("Created canvas"+results.data_url);
-          window.location='draw.html';
-        }
-      });
-
-    document.getElementById("canvasimg").src = imgPath;
 }
