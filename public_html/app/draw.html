@@ -12,7 +12,6 @@
         <link rel="stylesheet" type="text/css" href="../css/draw.css">
 	<script src="../jquery.js"></script>
 	<script src="./draw.js"></script>
-    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
     </head>
     <body onload="init()">
         <div class="header">
@@ -22,7 +21,7 @@
             <hr> 
         </div>
         <div class="main">
-            <canvas id="can" width="600" height="600"></canvas>
+            <canvas id="can" width="400" height="400"></canvas>
             <div id="d1">Choose Color</div>
             <div id="green" onclick="color(this)"></div>
             <div id="blue" onclick="color(this)"></div>
