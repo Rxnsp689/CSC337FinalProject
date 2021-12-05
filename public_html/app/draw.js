@@ -33,14 +33,22 @@ function loadCanvas() {
                 contentType: 'application/x-www-form-urlencoded',
                 success: function(result){
                   results = JSON.parse(result);
-                  console.log(results);
+                  //console.log(results);
                   data_url = results[0].data_url;
-                  console.log("hello: " +data_url+ "bye");
+                  //console.log("hello: " +data_url+ "bye");
+                  if (data_url !== "") {
+                    console.log("loading image");
+                    var img = new Image;
+                    img.onload = function(){
+                        ctx.drawImage(img,0,0);
+                    };
+                    img.src = data_url;
+                  }
                 }
             });
         }
     });
-
+    console.log(data_url);
     canvas = document.getElementById('can');
     ctx = canvas.getContext("2d");
     w = canvas.width;
@@ -48,7 +56,8 @@ function loadCanvas() {
 
     document.getElementById("canvasimg").src = "";
 
-    if (data_url != "") {
+    if (data_url !== "") {
+        console.log("loading image");
         var img = new Image;
         img.onload = function(){
             ctx.drawImage(img,0,0);
@@ -151,19 +160,11 @@ function erase() {
 function save() {
     var imgName = prompt("Please Enter a name for your master piece");
     var imgData = canvas.toDataURL();
-    $.ajax({
-        url: "/saveCanvas",
-        data: {
-            "canvas_id": canvasIdForImg,
-            "data_url": imgData,
-        },
-        dataType: 'json',
-        method: "POST",
-        contentType: 'application/x-www-form-urlencoded',
-        success: function(result){
-          results = JSON.parse(result);
-          console.log("Created room"+results.room_token);
-          window.location='draw.html';
-        }
+    body = {
+        canvas_id: canvasIdForImg,
+        data_url: imgData,
+    };
+    $.post("/saveCanvas", body, (data) => {
+        console.log("saved image");
     });
 }

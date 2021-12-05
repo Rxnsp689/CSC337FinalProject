@@ -215,12 +215,24 @@ app.get("/room/:token", (req,res) => {
 });
 
 app.post('/saveCanvas', (req,res) => {
-    requestData = JSON.parse(req.body.data);
-    Canvas.find({_id:requestData.canvas_id}).exec((err,results) => {
-        if(err){return res.end("ERROR");};
-        results.data_url = requestData.data_url;
-        results.save();
-    });
+    console.log("in server side save canvas");
+    //console.log(req.body);
+    var canvasid = req.body.canvas_id;
+    var dataurl = req.body.data_url;
+    console.log(canvasid);
+    Canvas.findByIdAndUpdate(canvasid,
+    {data_url: dataurl}, function(err,docs){
+            if(err){
+                return res.end("ERROR")
+            } else{
+                console.log("Saved server canvas");
+            }
+        }
+        /*if(err){return res.end("ERROR");};
+        results.data_url = dataurl;
+        console.log(results.data_url);
+        results.save()
+        console.log("Saved server canvas");*/);
 });
 
 // get canvas for a user
