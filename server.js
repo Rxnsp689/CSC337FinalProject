@@ -16,7 +16,10 @@ const crypto = require('crypto');
 //const rooms = require("./server/routes/Rooms");
 
 // Tell the express app to pare any body type and to use a cookie parser
-app.use(parser.json());
+app.use(parser.urlencoded({ extended: false }))
+app.use(parser.text({type: '*/*'}));
+app.use(express.json());
+//app.use(parser.json());
 app.use(parser.urlencoded({extended: true}));
 app.use(cookieParser());
 
