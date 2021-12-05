@@ -8,6 +8,10 @@ const RoomSchema = new Schema({
     },
     room_token: {
         type: String
+    },
+    canvas_id: {
+        type: Schema.Types.ObjectId,
+        ref: 'Canvas'
     }
 
 })

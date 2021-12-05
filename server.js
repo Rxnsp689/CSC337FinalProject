@@ -138,8 +138,13 @@ app.post("/createRoom", (req,res) => {
     }
     User.findOne({username:u}).exec((err,results) => {
         if(err){return res.end("ERROR");};
-        var room1 = new Room({host_id: results._id, room_token: generateRoomID(15)});
-
+        var canvas1 = new Canvas({user_id: results._id, data_url:""});
+        canvas1.save((err)=>{
+            if(err) console.log('Failed to create canvas');
+            console.log("Saved canvas");
+            //res.end("Saved canvas successfully");
+        });
+        var room1 = new Room({host_id: results._id, room_token: generateRoomID(15), canvas_id: canvas1._id});
         room1.save((err)=>{
             if(err) console.log('PROBLEM');
             console.log("SAVED");
