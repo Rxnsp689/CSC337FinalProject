@@ -38,6 +38,11 @@ h1 {
     text-align: center;
 }
 
+.center_me {
+    text-align: center;
+    font-family: fantasy;
+}
+
 .header {
     position: fixed;
     top: 0px;

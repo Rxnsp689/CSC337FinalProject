@@ -19,24 +19,14 @@
         </div>
         <div class="main_content">
             <div id="home_left">
-                <div class="hl" id="search">
-                    <input name="search_input" type="text" id="search_input">
-                    <button type="button" onclick="itemSearch()">Search for Drawing's by Group Name</button>
-                </div>
-                <!--<div class="hl" id="view_listings">
-                    <button type="button" onclick="viewListings()">View Your Listings</button>
-                </div>-->
                 <div class="hl" id="new_room">
-                    <!--onclick="viewPurchases()"-->
                     <button type="button" onclick="createRoom();">Create a New Room!</button>
                 </div>
                 <div class="hl" id="existing_room">
-                    <!--onclick="viewPurchases()"-->
                     <input name="room_input" type="text" id="room_input">
                     <button type="button" onclick="joinRoom();">Join a room!</button>
                 </div>
                 <div class="hl" id="new_drawing">
-                    <!--onclick="viewPurchases()"-->
                     <button type="button" onclick="window.location='draw.html';">Create a New Drawing!</button>
                 </div>
                 <div class="hl" id="logout">
@@ -45,7 +35,10 @@
             </div>
             <div class="vl"></div>
             <div id="home_right">
-                <h1 class="h1center">Saved Drawings</h1>
+                <div class="center_me">
+                    <h1>CSC 337 Final Project</h1>
+                    <h1>Daniel Ryngler and Sophia Wang</h1>
+                </div>
             </div>
         </div>
     </body>

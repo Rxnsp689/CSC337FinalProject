@@ -14,7 +14,29 @@ function loadCanvas() {
 
     var url = document.location.href;
     var params = url.split('?');
-    console.log(params)
+    var roomID = params[1].split('=')[1];
+
+    $.ajax({
+        url: '/room/'+roomID,
+        method: "GET",
+        contentType: 'application/json',
+        success: function(result){
+            results = JSON.parse(result);
+            var canvasIdForImg = results.canvas_id;
+            console.log("Canvas Id ", canvasIdForImg);
+            
+            $.ajax({
+                url: '/getCanvas/'+canvasIdForImg,
+                method: "GET",
+                contentType: 'application/json',
+                success: function(result){
+                  results = JSON.parse(result);
+                  var data_url = results.data_url;
+                  console.log("data", data_url);
+                }
+            });
+        }
+    });
 
     canvas = document.getElementById('can');
     ctx = canvas.getContext("2d");
@@ -23,12 +45,13 @@ function loadCanvas() {
 
     document.getElementById("canvasimg").src = "";
 
-    /*
-    var img = new Image;
-    img.onload = function(){
-        ctx.drawImage(img,0,0); 
-    };
-    img.src = "";*/
+    if (data_url != "") {
+        var img = new Image;
+        img.onload = function(){
+            ctx.drawImage(img,0,0); 
+        };
+        img.src = data_url;
+    }
 
     canvas.addEventListener("mousemove", function (e) {
         cordinate('move', e)
@@ -135,10 +158,6 @@ function save() {
         console.log("saved image");
     });
 
-
-
-
-    
     $.ajax({
         url: '/currUser',
         method: "GET",

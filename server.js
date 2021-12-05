@@ -42,7 +42,6 @@ function filterSessions() {
   }
 }
 
-
 setInterval(filterSessions,2000);
 function putSession(username, sessionKey){
   if (username in sessions) {
@@ -231,7 +230,7 @@ app.get("/getCanvas/:userid",(req,res)=>{
 
 // get all canvas for a canvasid
 app.get("/getCanvas/:canvasid",(req,res)=>{
-    Canvas.find({user_id:req.params.canvasid}).exec((err,results) => {
+    Canvas.find({_id:req.params.canvasid}).exec((err,results) => {
         if(err){return res.end("ERROR");};
         res.end(JSON.stringify(results));
     });
