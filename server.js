@@ -212,18 +212,26 @@ app.get("/room/:token", (req,res) => {
     });
 });
 
-app.post('/createCanvas', (req,res) => {
+app.post('/saveCanvas', (req,res) => {
     requestData = JSON.parse(req.body.data);
-    var canvas1 = new Canvas({user_id: requestData.user_id, data_url:requestData.data_url});
-    canvas1.save((err)=>{
-        if(err) console.log('Failed to create canvas');
-        res.end("Saved canvas successfully");
+    Canvas.find({_id:requestData.canvas_id}).exec((err,results) => {
+        if(err){return res.end("ERROR");};
+        results.data_url = requestData.data_url;
+        results.save();
     });
 });
 
-// get all canvases for a user
+// get canvas for a user
 app.get("/getCanvas/:userid",(req,res)=>{
     Canvas.find({user_id:req.params.userid}).exec((err,results) => {
+        if(err){return res.end("ERROR");};
+        res.end(JSON.stringify(results));
+    });
+});
+
+// get all canvas for a canvasid
+app.get("/getCanvas/:canvasid",(req,res)=>{
+    Canvas.find({user_id:req.params.canvasid}).exec((err,results) => {
         if(err){return res.end("ERROR");};
         res.end(JSON.stringify(results));
     });
