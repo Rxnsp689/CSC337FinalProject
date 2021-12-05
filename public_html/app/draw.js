@@ -151,12 +151,19 @@ function erase() {
 function save() {
     var imgName = prompt("Please Enter a name for your master piece");
     var imgData = canvas.toDataURL();
-
-    body = {
-        canvas_id: canvasIdForImg,
-        data_url: imgData,
-    };
-    $.post("/saveCanvas", body, (data) => {
-        console.log("saved image");
+    $.ajax({
+        url: "/saveCanvas",
+        data: {
+            "canvas_id": canvasIdForImg,
+            "data_url": imgData,
+        },
+        dataType: 'json',
+        method: "POST",
+        contentType: 'application/x-www-form-urlencoded',
+        success: function(result){
+          results = JSON.parse(result);
+          console.log("Created room"+results.room_token);
+          window.location='draw.html';
+        }
     });
 }
