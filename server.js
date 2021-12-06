@@ -149,7 +149,7 @@ app.post("/createRoom", (req,res) => {
         var room1 = new Room({host_id: results._id, room_token: generateRoomID(15), canvas_id: canvas1._id});
         room1.save((err)=>{
             if(err) console.log('PROBLEM');
-            console.log("SAVED");
+            console.log("SAVED, room_token: "+room1.room_token);
             //res.end("SAVED");
         });
         res.end(JSON.stringify(room1));

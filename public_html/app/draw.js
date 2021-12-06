@@ -14,40 +14,43 @@ var canvasIdForImg = "";
 function loadCanvas() {
     var data_url = "";
     var url = document.location.href;
-    var params = url.split('?');
-    var roomID = params[1].split('=')[1];
-    console.log("roomID: " + roomID);
-    $.ajax({
-        url: '/room/'+roomID,
-        method: "GET",
-        contentType: 'application/x-www-form-urlencoded',
-        success: function(result){
-            results = JSON.parse(result);
-            console.log(results);
-            canvasIdForImg = results.canvas_id;
-            console.log("Canvas Id ", canvasIdForImg);
+    if(url.includes("token")){
+        var params = url.split('?');
+        var roomID = params[1].split('=')[1];
+        console.log("roomID: " + roomID);
+        $.ajax({
+            url: '/room/'+roomID,
+            method: "GET",
+            contentType: 'application/x-www-form-urlencoded',
+            success: function(result){
+                results = JSON.parse(result);
+                console.log(results);
+                canvasIdForImg = results.canvas_id;
+                console.log("Canvas Id ", canvasIdForImg);
 
-            $.ajax({
-                url: '/getCanvas/'+canvasIdForImg,
-                method: "GET",
-                contentType: 'application/x-www-form-urlencoded',
-                success: function(result){
-                  results = JSON.parse(result);
-                  //console.log(results);
-                  data_url = results[0].data_url;
-                  //console.log("hello: " +data_url+ "bye");
-                  if (data_url !== "") {
-                    console.log("loading image");
-                    var img = new Image;
-                    img.onload = function(){
-                        ctx.drawImage(img,0,0);
-                    };
-                    img.src = data_url;
-                  }
-                }
-            });
-        }
-    });
+                $.ajax({
+                    url: '/getCanvas/'+canvasIdForImg,
+                    method: "GET",
+                    contentType: 'application/x-www-form-urlencoded',
+                    success: function(result){
+                      results = JSON.parse(result);
+                      //console.log(results);
+                      data_url = results[0].data_url;
+                      //console.log("hello: " +data_url+ "bye");
+                      if (data_url !== "") {
+                        console.log("loading image");
+                        var img = new Image;
+                        img.onload = function(){
+                            ctx.drawImage(img,0,0);
+                        };
+                        img.src = data_url;
+                      }
+                    }
+                });
+            }
+        });
+    }
+
     console.log(data_url);
     canvas = document.getElementById('can');
     ctx = canvas.getContext("2d");

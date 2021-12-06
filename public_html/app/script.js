@@ -36,7 +36,8 @@ function createRoom(){
 
       results = JSON.parse(result);
       console.log("Created room"+results.room_token);
-      window.location='draw.html';
+      //window.location='draw.html';
+      window.location='draw.html?token='+results.room_token;
     }
   });
 }
