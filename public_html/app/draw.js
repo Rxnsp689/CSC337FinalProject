@@ -38,24 +38,28 @@ function loadCanvas() {
                 console.log(results);
                 canvasIdForImg = results.canvas_id;
                 console.log("Canvas Id ", canvasIdForImg);
-
-                $.ajax({
-                    url: '/getCanvas/'+canvasIdForImg,
-                    method: "GET",
-                    contentType: 'application/x-www-form-urlencoded',
-                    success: function(result){
-                      results = JSON.parse(result);
-                      data_url = results[0].data_url;
-                      if (data_url !== "") {
-                        console.log("loading image");
-                        var img = new Image;
-                        img.onload = function(){
-                            ctx.drawImage(img,0,0);
-                        };
-                        img.src = data_url;
-                      }
-                    }
-                });
+                
+                setInterval(function() { loadImage() }, 2000);
+                setInterval(function() { save() }, 2000);
+                function loadImage() {
+                    $.ajax({
+                        url: '/getCanvas/'+canvasIdForImg,
+                        method: "GET",
+                        contentType: 'application/x-www-form-urlencoded',
+                        success: function(result){
+                        results = JSON.parse(result);
+                        data_url = results[0].data_url;
+                        if (data_url !== "") {
+                            console.log("loading image");
+                            var img = new Image;
+                            img.onload = function(){
+                                ctx.drawImage(img,0,0);
+                            };
+                            img.src = data_url;
+                        }
+                        }
+                    });
+                }
             }
         });
     }
@@ -186,7 +190,7 @@ Function to save canvas drawing. Calls server to save the data_url to be able
 Use the drawing again in the room.
 */
 function save() {
-    var imgName = prompt("Please Enter a name for your master piece");
+    //var imgName = prompt("Please Enter a name for your master piece");
     var imgData = canvas.toDataURL();
     body = {
         canvas_id: canvasIdForImg,
