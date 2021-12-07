@@ -18,7 +18,7 @@ var canvasIdForImg = "";
 
 /*
  Function called when page is first loaded
- It adds the previous drawing from the group to the canvas and 
+ It adds the previous drawing from the group to the canvas and
  initializes the canvas to be able to be drawn on.
 */
 function loadCanvas() {
@@ -27,7 +27,7 @@ function loadCanvas() {
     if(url.includes("token")){
         var params = url.split('?');
         var roomID = params[1].split('=')[1];
-        $("#room_token").val(roomID);
+        $("#room_token").text(roomID);
         console.log("roomID: " + roomID);
         $.ajax({
             url: '/room/'+roomID,
@@ -182,7 +182,7 @@ function erase() {
 }
 
 /*
-Function to save canvas drawing. Calls server to save the data_url to be able 
+Function to save canvas drawing. Calls server to save the data_url to be able
 Use the drawing again in the room.
 */
 function save() {
