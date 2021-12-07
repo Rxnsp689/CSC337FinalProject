@@ -1,6 +1,3 @@
-/*
-cannot seem to move out server routes to other folders? any alternative?
-*/
 const mongoose = require('mongoose');
 const express = require('express');
 const parser = require('body-parser')
@@ -8,12 +5,12 @@ const cookieParser = require('cookie-parser');
 // Initialize the express application
 const app = express();
 const http = require('http').Server(app);
+
+// using schemas defined in other folder
 const User = require("./server/schemas/User");
 const Room = require("./server/schemas/Room");
 const Canvas = require("./server/schemas/Canvas");
 const crypto = require('crypto');
-//const users = require("./server/routes/Rooms");
-//const rooms = require("./server/routes/Rooms");
 
 // Tell the express app to pare any body type and to use a cookie parser
 app.use(parser.urlencoded({ extended: false }))
@@ -36,6 +33,9 @@ http.listen(port, () => {
 TIMEOUT = 120000 // 2 minutes
 var sessions = {};
 
+/*
+ Function called when to delete sessions that have surpassed the timeout
+*/
 function filterSessions() {
   let now = Date.now();
   for (e in sessions) {
@@ -46,6 +46,10 @@ function filterSessions() {
 }
 
 setInterval(filterSessions,2000);
+
+/*
+ Function called to add/extend session for a given user
+*/
 function putSession(username, sessionKey){
   if (username in sessions) {
     sessions[username] = {'key': sessionKey, 'time': Date.now()};
@@ -57,6 +61,9 @@ function putSession(username, sessionKey){
   }
 }
 
+/*
+ Function called to verify if user is in valid session
+*/
 function isValidSession(username, sessionKey) {
   if (username in sessions && sessions[username].key == sessionKey) {
     return true;
@@ -78,6 +85,9 @@ function isPasswordCorrect(account, password) {
   return account.hash == hash;
 }
 
+/*
+ Function called to authenticate user and redirect to index.html if unauthenticated
+*/
 function authenticate(req, res, next) {
   console.log("IN authenticate");
   var c = req.cookies;
@@ -103,6 +113,9 @@ const mongoDBURL = 'mongodb://127.0.0.1/draw';
 mongoose.connect(mongoDBURL, { useNewUrlParser: true });
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+/*
+ Function generates a room token by randomly selecting characters to add until the string reached tokenLength(we used 15)
+*/
 function generateRoomID(tokenLength){
     var possibleChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     var lenChars = possibleChars.length;
@@ -112,6 +125,10 @@ function generateRoomID(tokenLength){
     }
     return id;
 }
+
+/*
+ Function handles the /currUser get request by getting and returning the User object of the user currently in session
+*/
 app.get('/currUser', (req,res) => {
     var c = req.cookies;
     var u;
@@ -127,6 +144,9 @@ app.get('/currUser', (req,res) => {
     });
 });
 
+/*
+ Function handles the /createRoom post request by getting User id of the current user in session, creating a room object containing the id of the canvas object as well.
+*/
 app.post("/createRoom", (req,res) => {
     console.log("in create room");
     //requestData = JSON.parse(req.body.data);
@@ -157,7 +177,9 @@ app.post("/createRoom", (req,res) => {
 
 });
 
-
+/*
+ Function handles the /account/create/:username/:password get request by validating the given username is not already used and then creating a User object with the passed in username, salt, and hash.
+*/
 app.get('/account/create/:username/:password', (req,res) => {
     console.log("server create user");
     User.find({username : req.params.username}).exec(function(error, results) {
@@ -179,6 +201,9 @@ app.get('/account/create/:username/:password', (req,res) => {
     });
 });
 
+/*
+ Function handles the /account/login/:username/:password get request by validating the given username exists and then checking the salt and hash match. If they do, the user is allowed to login
+*/
 app.get('/account/login/:username/:password', (req, res) => {
   User.find({username: req.params.username}).exec(function(err,results){
     if(err){
@@ -200,10 +225,11 @@ app.get('/account/login/:username/:password', (req, res) => {
   });
 });
 
+/*
+ Function handles the /room/:token get request by retrieving the room object with the given token
+*/
 app.get("/room/:token", (req,res) => {
     console.log("in server side room");
-    //requestData = JSON.parse(req.body.data);
-    //console.log("room_token: "+requestData.room_token);
     console.log("token: " + req.params.token);
     Room.findOne({room_token:req.params.token}).then(room => {
         if(room){
@@ -214,6 +240,9 @@ app.get("/room/:token", (req,res) => {
     });
 });
 
+/*
+ Function handles the /saveCanvas post request by retrieving and updating the data_url of the canvas object with the passed in canvasid
+*/
 app.post('/saveCanvas', (req,res) => {
     console.log("in server side save canvas");
     //console.log(req.body);
@@ -228,20 +257,9 @@ app.post('/saveCanvas', (req,res) => {
                 console.log("Saved server canvas");
             }
         }
-        /*if(err){return res.end("ERROR");};
-        results.data_url = dataurl;
-        console.log(results.data_url);
-        results.save()
-        console.log("Saved server canvas");*/);
+        );
 });
 
-// get canvas for a user
-/*app.get("/getCanvas/:userid",(req,res)=>{
-    Canvas.find({user_id:req.params.userid}).exec((err,results) => {
-        if(err){return res.end("ERROR");};
-        res.end(JSON.stringify(results));
-    });
-});*/
 
 // get all canvas for a canvasid
 app.get("/getCanvas/:canvasid",(req,res)=>{

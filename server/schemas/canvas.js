@@ -1,3 +1,7 @@
+/*
+JS defining schema for a canvas object
+Daniel Ryngler and Sophia Wang
+*/
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
