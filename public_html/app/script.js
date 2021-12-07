@@ -3,7 +3,16 @@
 Log user out
 */
 function logout() {
-  window.location.href = '../account/index.html';
+  console.log("client side logout");
+  $.ajax({
+    url: '/logout',
+    method: "GET",
+    contentType: 'application/json',
+    success: function(result){
+      console.log("successfully logged out");
+      window.location.href = '../account/index.html';
+    }
+  });
 }
 
 /*

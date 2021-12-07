@@ -61,6 +61,13 @@ function putSession(username, sessionKey){
   }
 }
 
+function removeSession(username){
+    if(username in sessions){
+        console.log("removing username: " + username);
+        delete sessions[username];
+    }
+}
+
 /*
  Function called to verify if user is in valid session
 */
@@ -144,6 +151,18 @@ app.get('/currUser', (req,res) => {
     });
 });
 
+app.get("/logout",(req,res)=>{
+    console.log("in server side logout");
+    var c = req.cookies;
+    console.log(c);
+    var u;
+    if(c && c.login){
+        u = c.login.username;
+        console.log("username: "+ u);
+        removeSession(u);
+        res.end("successfully logged out");
+    }
+});
 /*
  Function handles the /createRoom post request by getting User id of the current user in session, creating a room object containing the id of the canvas object as well.
 */
