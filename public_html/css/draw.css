@@ -1,6 +1,6 @@
 /*
-CSS for drawing page
-Daniel Ryngler
+    CSS for drawing page
+    Daniel Ryngler and Sophia Wang
 */
 
 * { 
@@ -97,6 +97,12 @@ h1 {
 #d8 {
     position:absolute;
     top:20%;
+    left:63%;
+}
+
+#room {
+    position:absolute;
+    top:27%;
     left:63%;
 }
 

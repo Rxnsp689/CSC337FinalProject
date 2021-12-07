@@ -1,3 +1,8 @@
+/*
+JS for allowing users to draw on the canvas element.
+Daniel Ryngler and Sophia Wang
+*/
+
 // Attribute of the canvas to be able to draw on it
 var canvas;
 var ctx;
@@ -11,12 +16,18 @@ var x = "black";
 var y = 2;
 var canvasIdForImg = "";
 
+/*
+ Function called when page is first loaded
+ It adds the previous drawing from the group to the canvas and 
+ initializes the canvas to be able to be drawn on.
+*/
 function loadCanvas() {
     var data_url = "";
     var url = document.location.href;
     if(url.includes("token")){
         var params = url.split('?');
         var roomID = params[1].split('=')[1];
+        $("#room_token").val(roomID);
         console.log("roomID: " + roomID);
         $.ajax({
             url: '/room/'+roomID,
@@ -34,9 +45,7 @@ function loadCanvas() {
                     contentType: 'application/x-www-form-urlencoded',
                     success: function(result){
                       results = JSON.parse(result);
-                      //console.log(results);
                       data_url = results[0].data_url;
-                      //console.log("hello: " +data_url+ "bye");
                       if (data_url !== "") {
                         console.log("loading image");
                         var img = new Image;
@@ -51,7 +60,6 @@ function loadCanvas() {
         });
     }
 
-    console.log(data_url);
     canvas = document.getElementById('can');
     ctx = canvas.getContext("2d");
     w = canvas.width;
@@ -69,19 +77,22 @@ function loadCanvas() {
     }
 
     canvas.addEventListener("mousemove", function (e) {
-        cordinate('move', e)
+        movePosition('move', e)
     }, false);
     canvas.addEventListener("mousedown", function (e) {
-        cordinate('down', e)
+        movePosition('down', e)
     }, false);
     canvas.addEventListener("mouseup", function (e) {
-        cordinate('up', e)
+        movePosition('up', e)
     }, false);
     canvas.addEventListener("mouseout", function (e) {
-        cordinate('out', e)
+        movePosition('out', e)
     }, false);
 }
 
+/*
+Function to the return color of the color item clicked on
+*/
 function color(obj) {
     switch (obj.id) {
         case "green":
@@ -111,7 +122,11 @@ function color(obj) {
 
 }
 
-function cordinate(res, e) {
+/*
+Function to determine where to begin drawing (x,y) coordinates
+and call the draw function to being drawing.
+*/
+function movePosition(res, e) {
     if (res == 'down') {
         oldX = newX;
         oldY = newY;
@@ -142,6 +157,9 @@ function cordinate(res, e) {
     }
 }
 
+/*
+Function to draw on the canvas
+*/
 function draw() {
     ctx.beginPath();
     ctx.moveTo(oldX, oldY);
@@ -152,6 +170,9 @@ function draw() {
     ctx.closePath();
 }
 
+/*
+Function to erase parts of drawing on the canvas
+*/
 function erase() {
     var m = confirm("Click to Clear");
     if (m) {
@@ -160,6 +181,10 @@ function erase() {
     }
 }
 
+/*
+Function to save canvas drawing. Calls server to save the data_url to be able 
+Use the drawing again in the room.
+*/
 function save() {
     var imgName = prompt("Please Enter a name for your master piece");
     var imgData = canvas.toDataURL();
